@@ -2,7 +2,7 @@ import numpy as np
 import os
 
 
-def load_data() -> int:
+def load_data():
 
     export_data = []
     data_path = os.path.join(os.path.dirname(__file__), "data.txt")

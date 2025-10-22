@@ -1,6 +1,3 @@
-from v1.optimizer import optimizer
-
-
 class autograd:
     def __init__(self, value, parents=(), op=''):
         self.value = value
@@ -8,7 +5,6 @@ class autograd:
         self.op = op
         self.grad = 0.0
         self._backward = lambda: None
-        self.optimizer = optimizer(0.0001)
 
     @staticmethod
     def add(a, b):
@@ -62,9 +58,6 @@ class autograd:
                     (a.value ** (exp - 1)) * out.grad),
         )
         return out
-
-    def adjust(self):
-        self.optimizer.adjust(self)
 
     def backward(self):
         topo, visited = [], set()

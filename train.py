@@ -1,5 +1,7 @@
 import random
-from v1 import load_data, autograd
+from v1 import load_data, autograd, optimizer
+
+opt = optimizer(0.0001)
 
 w = autograd(random.uniform(-0.1, 0.1), ())
 b = autograd(random.uniform(-0.1, 0.1), ())
@@ -12,11 +14,8 @@ def get_loss(y, y_hat):
     loss = y-y_hat
     loss = loss**2
     loss.backward()
-    print("loss:", loss.value)
-    print("w.grad:", w.grad)
-    print("b.grad:", b.grad)
-    b.adjust()
-    w.adjust()
+    opt.adjust(b)
+    opt.adjust(w)
 
     return loss.value
 
@@ -38,13 +37,13 @@ def average_loss(arr):
 
 
 def main():
-    losses = []
     for i in range(50):
+        losses = []
         for x, y in data:
             guessed = guess(x)
             evaluate = get_loss(y, guessed)
             losses.append(evaluate)
-        print(average_loss(losses))
+        print(f"epoch {i}: {average_loss(losses)}")
 
     test1 = guess(2)
     test2 = guess(26)

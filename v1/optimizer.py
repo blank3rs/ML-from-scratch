@@ -5,8 +5,6 @@ class optimizer:
         self.learning_rate = learning_rate
 
     def adjust(self, param):
-
         param.value = (param.value -
                        (self.learning_rate * param.grad))
         param.grad = 0
-        print("new param value", param.value)
