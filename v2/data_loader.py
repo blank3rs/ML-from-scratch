@@ -19,4 +19,6 @@ df["Income (USD)"] /= df["Income (USD)"].max()
 x = df[["Gender", "Age", "Height (cm)"]].values
 y = df["Income (USD)"].values
 
-print(df.head())
+
+def get_data():
+    return [x, y]
