@@ -1,9 +1,12 @@
+import numpy as np
+
+
 class autograd:
     def __init__(self, value, parents=(), op=''):
-        self.value = value
+        self.value = np.array(value)
         self.parents = parents
         self.op = op
-        self.grad = 0.0
+        self.grad = np.zeros_like(self.value)
         self._backward = lambda: None
 
     @staticmethod
@@ -26,9 +29,9 @@ class autograd:
 
     @staticmethod
     def multiply(a, b):
-        out = autograd(a.value * b.value, (a, b), '*')
+        out = autograd(np.multiply(a.value, b.value)(a, b), '*')
         out._backward = lambda: (
-            setattr(a, 'grad', a.grad + b.value * out.grad),
+            setattr(a, 'grad', a.grad + np.multiply(b.value, out.grad)),
             setattr(b, 'grad', b.grad + a.value * out.grad)
         )
         return out
