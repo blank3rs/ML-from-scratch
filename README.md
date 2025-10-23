@@ -28,45 +28,33 @@ A **complete** minimal automatic differentiation engine using scalar values.
 
 **Generate data:**
 ```bash
-python -m v1.create_data
+uv run python -m v1.create_data
 ```
 
 **Train model:**
 ```bash
-python -m v1.train
+uv run python -m v1.train
 ```
 
 **Deep dive:** See `v1/README.md` for comprehensive explanation of every concept.
 
 ---
 
-## v2 - Tensor Autograd (🚧 In Progress)
+## v2 - Tensor Autograd (🚧 Work in Progress)
 
 Upgrading from scalar to **tensor operations** using NumPy arrays.
 
-**What's changing:**
-- `value` is now `np.array()` instead of Python scalar
-- `grad` is now `np.zeros_like()` for matching shapes
-- Operations handle element-wise and matrix computations
-- Real-world dataset: Kaggle gender classification (Gender, Age, Height → Income)
-
-**Current status:**
-- ⚠️ `autograd.py` has syntax error on line 32 in `multiply()` 
-- ⚠️ `train.py` is exploration code only (incomplete training loop)
-- ⚠️ `optimizer.py` needs update for NumPy arrays
-- ✅ Data loader working with normalized features
+**Goals:**
+- Support `np.array()` values instead of Python scalars
+- Handle element-wise and matrix computations
+- Train on real-world dataset: Kaggle gender classification
+- Implement batch processing
 
 **Dataset:**
 - Source: `muhammadtalharasool/simple-gender-classification`
 - Features: Gender (binary), Age, Height (cm) 
 - Target: Income (USD)
 - All normalized to [0, 1] range
-
-**Next steps:**
-1. Fix multiply operation syntax
-2. Implement proper matrix multiplication
-3. Build complete training loop
-4. Add batch processing
 
 ---
 
@@ -94,16 +82,24 @@ learn/
 
 ---
 
-## Dependencies
+## Setup
 
-Install with `uv`:
+This project uses `uv` for fast, reliable dependency management.
+
+**Install uv** (if you don't have it):
+```bash
+curl -LsSf https://astral.sh/uv/install.sh | sh
+```
+
+**Install dependencies:**
 ```bash
 uv sync
 ```
 
-Or with pip:
+**Run with uv:**
 ```bash
-pip install numpy pandas matplotlib kagglehub torch
+uv run python -m v1.create_data
+uv run python -m v1.train
 ```
 
 ---
