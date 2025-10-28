@@ -29,7 +29,7 @@ class autograd:
 
     @staticmethod
     def multiply(a, b):
-        out = autograd(np.multiply(a.value, b.value)(a, b), '*')
+        out = autograd(np.multiply(a.value, b.value), (a, b), '*')
         out._backward = lambda: (
             setattr(a, 'grad', a.grad + np.multiply(b.value, out.grad)),
             setattr(b, 'grad', b.grad + a.value * out.grad)
@@ -38,7 +38,7 @@ class autograd:
 
     @staticmethod
     def div(a, b):
-        out = autograd(a.value / b.value, (a, b), '/')
+        out = autograd(np.transpose(b.value) * a.value, (a, b), '/')
         out._backward = lambda: (
             setattr(a, 'grad', a.grad + (1 / b.value) * out.grad),
             setattr(b, 'grad', b.grad - (a.value / (b.value ** 2)) * out.grad)
@@ -94,9 +94,6 @@ class autograd:
 
     def __pow__(self, power):
         return autograd.pow(self, power)
-
-    def __repr__(self):
-        return f"autograd(value={self.value}, grad={self.grad}, op='{self.op}')"
 
     def __neg__(self):
         return self * -1
