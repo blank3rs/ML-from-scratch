@@ -39,7 +39,7 @@ def average_loss(arr):
 
 
 def main():
-    for i in range(50):
+    for i in range(20):
         losses = []
         for x, y in data:
             guessed = guess(x)

@@ -22,3 +22,12 @@ y = df["Income (USD)"].values
 
 def get_data():
     return [x, y]
+
+
+def get_train_test_split(test_size=0.2, random_state=42):
+    import numpy as np
+    np.random.seed(random_state)
+    indices = np.random.permutation(len(x))
+    split_idx = int(len(x) * (1 - test_size))
+    train_idx, test_idx = indices[:split_idx], indices[split_idx:]
+    return x[train_idx], x[test_idx], y[train_idx], y[test_idx]

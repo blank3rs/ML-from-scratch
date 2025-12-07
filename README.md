@@ -1,30 +1,22 @@
-# Deep Learning From Scratch
+# ML From Scratch
 
-Building my own implementations of deep learning primitives to truly understand how they work under the hood.
+Implementations of machine learning primitives from scratch.
 
-## Philosophy
-
-This repo contains multiple versions (`v1/`, `v2/`, etc.) as I iterate and learn. Each version represents a deeper understanding or different approach to building ML frameworks from first principles.
+This repo contains multiple versions as I iterate and learn. Each version represents a different approach to building ML frameworks.
 
 ---
 
-## v1 - Scalar Autograd & Linear Regression ✅
+## v1 - Scalar Autograd
 
-A **complete** minimal automatic differentiation engine using scalar values.
+Automatic differentiation engine using scalar values.
 
 **What's implemented:**
-- Custom autograd engine with computational graph tracking
-- Reverse-mode automatic differentiation (backpropagation via topological sort)
-- Basic operations: add, subtract, multiply, divide, power
-- SGD optimizer with gradient zeroing
-- Synthetic data generation (y = x - 1 relationship)
-- Linear regression training loop (50 epochs)
-
-**Key concepts demonstrated:**
-- Computational graphs as DAGs
-- Chain rule application through backward pass
-- Gradient accumulation
-- Operator overloading for clean syntax
+- Autograd engine with computational graph tracking
+- Reverse-mode automatic differentiation
+- Operations: add, subtract, multiply, divide, power
+- SGD optimizer
+- Synthetic data generation
+- Linear regression training
 
 **Generate data:**
 ```bash
@@ -40,21 +32,28 @@ uv run python -m v1.train
 
 ---
 
-## v2 - Tensor Autograd (🚧 Work in Progress)
+## v2 - Tensor Autograd
 
-Upgrading from scalar to **tensor operations** using NumPy arrays.
+Automatic differentiation engine using NumPy arrays for matrix operations.
 
-**Goals:**
-- Support `np.array()` values instead of Python scalars
-- Handle element-wise and matrix computations
-- Train on real-world dataset: Kaggle gender classification
-- Implement batch processing
+**What's implemented:**
+- Autograd engine supporting NumPy arrays
+- Element-wise operations: add, subtract, multiply, divide, power
+- Matrix multiplication with gradient propagation
+- SGD optimizer for tensor parameters
+- Train/test split and evaluation metrics
+- Real dataset: Kaggle gender classification
 
 **Dataset:**
 - Source: `muhammadtalharasool/simple-gender-classification`
-- Features: Gender (binary), Age, Height (cm) 
-- Target: Income (USD)
-- All normalized to [0, 1] range
+- Features: Gender, Age, Height
+- Target: Income
+- Normalized to [0, 1] range
+
+**Train model:**
+```bash
+uv run v2/train.py
+```
 
 ---
 
@@ -70,11 +69,11 @@ learn/
 │   ├── train.py         # Training loop
 │   └── README.md        # Deep technical explanation
 │
-├── v2/              # Tensor autograd (WIP)
-│   ├── autograd.py      # NumPy-based engine (has bugs)
-│   ├── optimizer.py     # Same as v1 (needs update)
-│   ├── data_loader.py   # Kaggle dataset loader
-│   └── train.py         # Exploration code (incomplete)
+├── v2/              # Tensor autograd
+│   ├── autograd.py      # NumPy-based engine
+│   ├── optimizer.py     # SGD optimizer
+│   ├── data_loader.py   # Dataset loader with train/test split
+│   └── train.py         # Training loop with evaluation
 │
 ├── pyproject.toml   # Dependencies (numpy, pandas, kagglehub, torch)
 └── README.md        # This file
@@ -84,9 +83,9 @@ learn/
 
 ## Setup
 
-This project uses `uv` for fast, reliable dependency management.
+This project uses `uv` for dependency management.
 
-**Install uv** (if you don't have it):
+**Install uv:**
 ```bash
 curl -LsSf https://astral.sh/uv/install.sh | sh
 ```
@@ -100,30 +99,19 @@ uv sync
 ```bash
 uv run python -m v1.create_data
 uv run python -m v1.train
+uv run v2/train.py
 ```
 
 ---
 
 ## Learning Goals
 
-By building these frameworks from scratch, I'm learning:
+Building these frameworks from scratch to understand:
 
-1. **How autograd actually works** - not just using PyTorch/TensorFlow
-2. **Computational graphs** - how every operation becomes a node
-3. **Backpropagation** - chain rule + topological sort
-4. **Gradient accumulation** - why we zero gradients
-5. **Operator overloading** - making Python do what we want
-6. **Scalar → Tensor transition** - handling shape broadcasting
-
----
-
-## What Makes This Different
-
-This isn't about building a "better PyTorch" - it's about **understanding** PyTorch by reimplementing its core ideas. Every line of code here teaches something fundamental about how modern ML frameworks work under the hood.
-
-The goal: when I use `loss.backward()` in PyTorch, I **know** exactly what's happening, not just that "it works."
-
----
-
-*This is learning by building, not production code. Bugs are features (learning opportunities).*
+1. How autograd works internally
+2. Computational graphs and node tracking
+3. Backpropagation via topological sort
+4. Gradient accumulation and zeroing
+5. Operator overloading for clean syntax
+6. Shape handling and broadcasting with tensors
 
